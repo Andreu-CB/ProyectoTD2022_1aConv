@@ -44,7 +44,8 @@ language:
 
 # Introducción
 
-Este documento explicativo te puede servir de plantilla para la realización de proyectos con *Rmarkdown* para la realizacón de memorias de práctica, tareas, etc. Pretende ser autoexplicativo.
+Se usan rutas especificas a la carpeta data, que es la carpeta donde se encuentra la informacion del proyecto en 14 ficheros diferentes en relación a la contaminación acústica del barrio de Ruzafa.
+
 
 # Configuración del los bloques (*Chunks*)
 
