@@ -184,4 +184,30 @@ Vivons_Chaflan_Cadiz <- read_csv("data/Vivons_Chaflan_Cadiz.csv")
 ```
 
 
+# Preparacion de los datos
+
+Todos los archivos leídos los pasamos a un formato tidy habiéndolos ordenado todos de la misma manera para posteriormente juntarlos todos en un mismo data frame y poder trabajar cómodamente con él.
+
+Comenzamos creando una columna a cada data frame distinto que se guardará en la variable lugar, de manera que cuando las juntemos, la variable 'place' tendrá la información de todas las tablas
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, tidy = FALSE}
+
+Cadiz_3$Place = "Cadiz 3"
+Cadiz_16$Place = "Cadiz 16"
+Carles_Cervera_34$Place = "Carles Cervera 34"
+Carles_Cervera_Chaflan_Reina_Donya_Maria$Place = "Carles Cervera Chaflan"
+Cuba_3$Place = "Cuba 3"
+Doctor_Serrano_21$Place = "Doctor Serrano"
+General_Prim_Chaflan_Donoso_Cortes$Place = "General Prim"
+Puerto_Rico_21$Place = "Puerto Rico 21"
+Salvador_Abril_Chaflan_Maestro_Jose_Serrano$Place = "Salvador Abril"
+Sueca_2$Place = "Sueca 2"
+Sueca_32$Place = "Sueca 32"
+Sueca_61$Place = "Sueca 61"
+Sueca_Esq_Denia$Place = "Sueca esq Denia"
+Vivons_Chaflan_Cadiz$Place = "Vivons Chaflan"
+
+```
+
+
 
