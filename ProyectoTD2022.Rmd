@@ -115,3 +115,33 @@ search()
 
 ```
 
+
+# Información
+
+**‘data/Sueca_Esq_Denia.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Sueca Esq. Denia
+
+**‘data/Cadiz_16.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Cádiz, 16
+
+**‘data/Cadiz_3.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Cádiz, 3
+
+**‘data/Cuba_3.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Cuba, 3
+
+**‘data/Sueca_2.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Sueca, 2
+
+**‘data/Sueca_61.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Sueca, 61
+
+**‘data/Sueca_32.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Sueca, 32
+
+**‘data/Carles_Cervera_Chaflan_Reina_Donya_Maria.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Carles Cervera, Chaflán Reina Doña María
+
+**‘data/Salvador_Abril_Chaflan_Maestro_Jose_Serrano.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Salvador Abril Chaflán Maestro José Serrano
+
+**‘data/Vivons_Chaflan_Cadiz.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Vivons Chaflán Cádiz
+
+**‘data/Carles_Cervera_34.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Carles Cervera, 34
+
+**‘data/Puerto_Rico_21.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Puerto Rico, 21
+
+**‘data/Doctor_Serrano_21.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle Doctor Serrano, 21
+
+**‘data/General_Prim_Chaflan_Donoso_Cortes.csv’** : Datos diarios del sensor de ruido ubicado en el barrio de Ruzafa, en la calle General Prim Chaflán Donoso Cortés
