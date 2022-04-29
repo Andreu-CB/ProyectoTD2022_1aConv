@@ -267,5 +267,11 @@ Después de fusionarlo, eliminamos las columnas prescindibles, estas son:
 ```{r}
 df <- rbind(Cadiz_3t, Cadiz_16t, Carles_Cervera_34t, Carles_Cervera_Chaflan_Reina_Donya_Mariat, Cuba_3t, Doctor_Serrano_21t, General_Prim_Chaflan_Donoso_Cortest, Puerto_Rico_21t, Salvador_Abril_Chaflan_Maestro_Jose_Serranot, Sueca_2t, Sueca_32t, Sueca_61t, Sueca_Esq_Deniat, Vivons_Chaflan_Cadizt)
 
+# Comprobamos si hay información irrelevante
+df %>% filter(fiwareServicePath != '/sonometros')
+df %>% filter(entityType != 'NoiseLevelObserved')
+
+# Las columnas _id, fiwareServicePath, recvTime y entityType no aportan información.
+dff <- df %>% select(-1, -fiwareServicePath, -entityType, -recvTime)
 ```
 
