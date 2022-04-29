@@ -10,9 +10,9 @@ lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
 
 output:
 
-  pdf_document:
-    toc: yes 
-    toc_depth: 3 
+  # pdf_document:
+  #   toc: yes 
+  #   toc_depth: 3 
 
   html_document:
     echo: yes
@@ -151,7 +151,7 @@ search()
 
 Abrimos los archivos y los cargamos
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, tidy = FALSE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE, tidy = FALSE}
 
 Cadiz_3 <- read_csv("data/Cadiz_3.csv")
 
@@ -190,7 +190,7 @@ Todos los archivos leídos los pasamos a un formato tidy habiéndolos ordenado t
 
 Comenzamos creando una columna a cada data frame distinto que se guardará en la variable lugar, de manera que cuando las juntemos, la variable 'place' tendrá la información de todas las tablas
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, tidy = FALSE}
+```{r, echo = TRUE, message = FALSE, warning = FALSE, tidy = FALSE}
 
 Cadiz_3$Place = "Cadiz 3"
 Cadiz_16$Place = "Cadiz 16"
@@ -259,12 +259,13 @@ Vivons_Chaflan_Cadizt = Vivons_Chaflan_Cadiz %>% gather(Ruido, Valor,8:length(Vi
 Fusionamos todos los dataframes para trabajar cómodamente con los datos.
 
 Después de fusionarlo, eliminamos las columnas prescindibles, estas son:
-- _id, que no aporta ninguna información
-- recvTime, que no aporta ninguna información
-- fiwareServicePath, que en todas las filas tiene el mismo valor (/sonometros)
-- entityType, que en todas las filas tiene el mismo valor (NoiseLevelObserved)
 
-```{r}
+- _id, que no aporta ninguna información\
+- recvTime, que no aporta ninguna información\
+- fiwareServicePath, que en todas las filas tiene el mismo valor (/sonometros)\
+- entityType, que en todas las filas tiene el mismo valor (NoiseLevelObserved)\
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE, tidy = FALSE}
 df <- rbind(Cadiz_3t, Cadiz_16t, Carles_Cervera_34t, Carles_Cervera_Chaflan_Reina_Donya_Mariat, Cuba_3t, Doctor_Serrano_21t, General_Prim_Chaflan_Donoso_Cortest, Puerto_Rico_21t, Salvador_Abril_Chaflan_Maestro_Jose_Serranot, Sueca_2t, Sueca_32t, Sueca_61t, Sueca_Esq_Deniat, Vivons_Chaflan_Cadizt)
 
 # Comprobamos si hay información irrelevante
@@ -283,16 +284,17 @@ dff <- dff %>% mutate(Place = as.factor(Place), entityId = as.factor(entityId), 
 
 Después de todos estos cambios, tenemos com resultado un dataset con las siguientes variables:
 
-**Place**, Lugar de medición
-**entityld**, Identificador único del sensor en la plataforma VLCi
-**dateObserved**, Día al que se refieren las medidas
-**Ruido**, Tipo de ruido que se mide
-**Valor**, Valor del ruido que se mide
+-**Place**, Lugar de medición\
+-**entityld**, Identificador único del sensor en la plataforma VLCi\
+-**dateObserved**, Día al que se refieren las medidas\
+-**Ruido**, Tipo de ruido que se mide\
+-**Valor**, Valor del ruido que se mide\
 
 # Utilidad de los datos
 Una vez delante de estos datos nos surgen varias preguntas que utilizando la información disponible podemos resolver:
-- ¿Qué mes es el más contaminante?
-- ¿En festivos se contamina más?
-- ¿El covid-19 ha afectado de alguna manera a la contaminación?
-- ¿Que estación del año es en la que menos se contamina?
+
+- ¿Qué mes es el más contaminante?\
+- ¿En festivos se contamina más?\
+- ¿El covid-19 ha afectado de alguna manera a la contaminación?\
+- ¿Que estación del año es en la que menos se contamina?\
 
