@@ -289,3 +289,10 @@ Después de todos estos cambios, tenemos com resultado un dataset con las siguie
 **Ruido**, Tipo de ruido que se mide
 **Valor**, Valor del ruido que se mide
 
+# Utilidad de los datos
+Una vez delante de estos datos nos surgen varias preguntas que utilizando la información disponible podemos resolver:
+- ¿Qué mes es el más contaminante?
+- ¿En festivos se contamina más?
+- ¿El covid-19 ha afectado de alguna manera a la contaminación?
+- ¿Que estación del año es en la que menos se contamina?
+
