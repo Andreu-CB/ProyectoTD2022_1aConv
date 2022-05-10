@@ -310,9 +310,40 @@ Observamos que no hay valores perdidos en la toma de datos, asumiendo que si los
 
 # Utilidad de los datos
 
-Una vez delante de estos datos nos surgen varias preguntas que utilizando la información disponible podemos resolver:
+Teniendo la informacion toda compacta podemos plantearnos una serie de preguntas. El objetivo de esto es tener informacion más fiable sobre la pregunta en particular.
+Usaremos funciones de la libreria dpylr para obtener la informacion que nos complazca para responder a las preguntas
+
+Pero antes, definiremos un vector de los ruidos que utilizaremos en nuestro análisis
+
+```{r}
+ruidos = unique(dff$Ruido)
+ruidos = c("LAeq", "LAeq_d", "LAeq_n", "LAeq_e", "LAeq_den")
+```
+
+Correspondiendo cada uno de ellos con: 
+
+-**LAeq**: Nivel sonoro continuo equivalente. En este caso el período establecido para este sensor es de 1 minuto.\
+
+-**LAeq_d**: Es un indicador de ruido asociado al día.\
+
+-**LAeq_e**: Es un indicador del nivel sonoro durante la tarde.\
+
+-**LAeq_n**: Es un indicador del nivel sonoro durante la noche.\
+
+-**LAeq_den**: índice de ruido día-tarde-noche, es utilizado para determinar la molestia vinculada a la exposición al ruido.\
+
 
 - ¿Qué mes es el más contaminante?\
+
+```{r}
+MesContaminante = dff %>% filter(Ruido %in% ruidos) %>% separate(dateObserved, c("Año","Mes","Dia"))
+
+MesContaminante %>% ggplot(aes(x = Mes, y = Valor, fill = Mes)) + geom_boxplot() + labs(title = paste0("Densidad del ruido ",sep="")) + facet_wrap(~Ruido, scales = "free")
+```
+Podemos ver en cada grafica un indicar de ruido diferente para hacer el estudio del mes con más volumen de ruido en la ciudad de Valencia, en las diferentes zonas con medidores de contaminación acústica.
+En relación a todos los indicadores de ruido, por minuto, en días, tardes y noches, se observa que el mes en el que más contaminación acústica tiene la ciudad es Marzo, coincidiendo con la festividad de Fallas, que conlleva actos multitudinarios, pirotécnias y música en altos niveles.
+
+
 - ¿En festivos se contamina más?\
 - ¿El covid-19 ha afectado de alguna manera a la contaminación?\
 - ¿Que estación del año es en la que menos se contamina?\
