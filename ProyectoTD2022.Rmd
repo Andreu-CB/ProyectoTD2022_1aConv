@@ -290,7 +290,26 @@ Después de todos estos cambios, tenemos com resultado un dataset con las siguie
 -**Ruido**, Tipo de ruido que se mide\
 -**Valor**, Valor del ruido que se mide\
 
+
+# Valores perdidos
+
+Conocer los valores perdidos es importante porque indican cuánto desconocemos sobre nuestros datos. A menudo, no es aconsejable hacer inferencias basadas en unos pocos casos. Además, tendremos en cuenta los valores que aparezcan para la respuesta a las preguntas que nos plantearemos a continuación.
+
+```{r}
+aggr(dff, prop = FALSE, combined = TRUE, numbers = TRUE, sortVars = TRUE, sortCombs = TRUE)
+```
+
+Podemos ver en el grafico que hay 0 valores perdidos en la columna de valor.
+
+```{r}
+sum(is.na(dff$Valor))
+```
+Otra forma de calcular los NA es hacer un sumatorio de NAs por columnas.
+Observamos que no hay valores perdidos en la toma de datos, asumiendo que si los existiera, correspondría con dias en los que no se han tomado las medidas de contaminacion acústica.
+
+
 # Utilidad de los datos
+
 Una vez delante de estos datos nos surgen varias preguntas que utilizando la información disponible podemos resolver:
 
 - ¿Qué mes es el más contaminante?\
