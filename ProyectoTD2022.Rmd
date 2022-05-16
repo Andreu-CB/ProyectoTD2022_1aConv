@@ -98,7 +98,7 @@ El siguiente bloque, al no especificar opciones del *chunk* usa la configuració
 
 # Especificamos las librerías necesarias en esta lista
 
-packages = c("tidyverse","knitr")
+packages = c("tidyverse","knitr", 'dplyr', 'tidyr', 'VIM')
 
 #use this function to check if each package is on the local machine
 #if a package is installed, it will be loaded
@@ -347,4 +347,31 @@ En relación a todos los indicadores de ruido, por minuto, en días, tardes y no
 - ¿En festivos se contamina más?\
 - ¿El covid-19 ha afectado de alguna manera a la contaminación?\
 - ¿Que estación del año es en la que menos se contamina?\
+```{r}
+amd <- dff %>% separate(dateObserved, c("Año","Mes","Dia"))
+amd <- amd %>% mutate(Año = as.integer(Año), Mes = as.integer(Mes), Dia = as.integer(Dia))
+
+for (i in 1:dim(amd[1])){
+  if (((amd[i, 'Mes']) >= 7 & (amd[i, 'Mes']) <= 8) | ((amd[i, 'Mes']) == 6 & (amd[i, 'Dia']) >= 21) | ((amd[i, 'Mes']) == 9 & (amd[i, 'Dia']) < 23)){
+    amd[i, 'Estacion'] <- 'Verano'
+  } else {
+    if (((amd[i, 'Mes']) >= 10 & (amd[i, 'Mes']) <= 11) | ((amd[i, 'Mes']) == 9 & (amd[i, 'Dia']) >= 23) | ((amd[i, 'Mes']) == 12 & (amd[i, 'Dia']) < 21)){
+      amd[i, 'Estacion'] <- 'Otoño'
+    } else {
+      if (((amd[i, 'Mes']) >= 1 & (amd[i, 'Mes']) <= 2) | ((amd[i, 'Mes']) == 12 & (amd[i, 'Dia']) >= 21) | ((amd[i, 'Mes']) == 3 & (amd[i, 'Dia']) < 20)){
+        amd[i, 'Estacion'] <-  'Invierno'
+      } else {
+        amd[i, 'Estacion'] <-  'Primavera'
+      }
+    }
+  }
+}
+amd %>% arrange(desc(Valor))
+# Suprimimos los datos erroneos
+
+amd <- amd %>% filter(Valor != Inf)
+
+amd %>% group_by(Estacion) %>% summarize(Media = mean(Valor, na.rm = T), Maximo = max(Valor), Minimo = (min(Valor))) %>% gather('Operacion', 'Valor', Media, Maximo, Minimo) %>% ggplot(aes(x = Estacion, y = Valor, col = Estacion, size = desc(Operacion))) + geom_point() + labs(size = "Tipo")
+```
+
 
