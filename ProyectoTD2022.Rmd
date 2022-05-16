@@ -338,14 +338,93 @@ Correspondiendo cada uno de ellos con:
 ```{r}
 MesContaminante = dff %>% filter(Ruido %in% ruidos) %>% separate(dateObserved, c("Año","Mes","Dia"))
 
-MesContaminante %>% ggplot(aes(x = Mes, y = Valor, fill = Mes)) + geom_boxplot() + labs(title = paste0("Densidad del ruido ",sep="")) + facet_wrap(~Ruido, scales = "free")
+MesContaminante%>%ggplot(aes(x=Mes,y=Valor,fill=Mes))+geom_boxplot(stat="identity")+labs_title=paste0("Densidad del ruido",sep="") facet_wrap(~Ruido, scales = "free")
+
+
 ```
 Podemos ver en cada grafica un indicador de ruido diferente para hacer el estudio del mes con más volumen de ruido en la ciudad de Valencia, en las diferentes zonas con medidores de contaminación acústica.
 En relación a todos los indicadores de ruido, por minuto, en días, tardes y noches, se observa que el mes en el que más contaminación acústica tiene la ciudad es Marzo, coincidiendo con la festividad de Fallas, que conlleva actos multitudinarios, pirotécnias y música en altos niveles.
 
 
 - ¿En festivos se contamina más?\
+Como festivos entendemos como aquellos periodos donde no es dia laborqable y por tanto no se trabaja.
+```{r}
+MesContaminante = dff %>% filter(Ruido %in% ruidos) %>% separate(dateObserved, c("Año","Mes","Dia"))
+fest <- dff %>% separate(dateObserved, c("Anyo","Mes","Dia"))
+fest <- fest %>% mutate(Anyo = as.integer(Anyo), Mes = as.integer(Mes), Dia = as.integer(Dia))
+
+for (i in 1:dim(fest[1])){
+  if (((fest[i, 'Mes']) == 1) & ((fest[i, 'Dia']) == 1 | (fest[i, 'Dia']) == 6 |(fest[i,'Dia']) == 22)){fest[i,"Festivo"]<-"Fest"
+  }
+  else {if (((fest[i, 'Mes']) == 3) & (fest[i, 'Dia']) == 19) 
+  {fest[i,"Festivo"]<-"Fest"}
+  else{if (((fest[i, 'Mes']) == 4) & ((fest[i, 'Dia']) == 15 | (fest[i, 'Dia']) == 18 | (fest[i, 'Dia']) == 25)){fest[i,"Festivo"]<-"Fest"
+  }
+  else{if (((fest[i, 'Mes']) == 5) & (fest[i, 'Dia']) == 2)  {fest[i,"Festivo"]<-"Fest"
+  }
+  else{if (((fest[i, 'Mes']) == 6) & (fest[i, 'Dia']) == 24) {fest[i,"Festivo"]<-"Fest" 
+  }
+  else{if (((fest[i, 'Mes']) == 8) & (fest[i, 'Dia']) == 15) {fest[i,"Festivo"]<-"Fest" 
+  }
+  else{ if (((fest[i, 'Mes']) == 10) & (fest[i, 'Dia']) == 12) {fest[i,"Festivo"]<-"Fest" 
+  }
+  else{ if (((fest[i, 'Mes']) == 11) & (fest[i, 'Dia']) == 1) {fest[i,"Festivo"]<-"Fest" 
+  }
+  else{if (((fest[i, 'Mes']) == 12) & ((fest[i, 'Dia']) == 6 | (fest[i, 'Dia']) ==                 8)){fest[i,"Festivo"]<-"Fest" }
+  else{
+    fest[i,"Festivo"]<-"No fest"
+  }
+  
+      }
+    }
+  }  
+  }
+  }
+  }
+  }
+  }
+}
+fest %>% arrange(desc(Valor)) %>% head()
+# Suprimimos los datos erroneos
+
+fest <- fest %>% filter(Valor != Inf)
+```
+
+```{r}
+fest %>% group_by(Festivo) %>% summarize(Media = mean(Valor, na.rm = T)) %>% 
+  ggplot(aes(x = Festivo, y = Media, fill = Festivo)) + geom_bar(stat = 'identity') + ggtitle('Media de ruido si es festivo o no')
+
+amd <- amd %>% 
+  mutate(Anyo = as.factor(Anyo))
+
+g2020<- fest %>%
+  filter(Anyo == 2020) %>% 
+  group_by(Festivo) %>% 
+  summarize(m = mean(Valor)) %>% 
+  ggplot(aes(x = Festivo, y = m, fill = Festivo)) + geom_bar(stat = 'identity') + ggtitle('Media dB 2020')
+
+g2021 <- fest %>%
+  filter(Anyo == 2021) %>% 
+  group_by(Festivo) %>% 
+  summarize(m = mean(Valor)) %>% 
+  ggplot(aes(x = Festivo, y = m, fill = Festivo)) + geom_bar(stat = 'identity') + ggtitle('Media dB 2021')
+
+g2022 <- fest %>%
+  filter(Anyo == 2022) %>% 
+  group_by(Festivo) %>% 
+  summarize(m = mean(Valor)) %>% 
+  ggplot(aes(x = Festivo, y = m, fill = Festivo)) + geom_bar(stat = 'identity') + ggtitle('Media dB 2022')
+
+g2020 + g2021 + g2022
+
+filter(fest, Valor > quantile(fest$Valor, prob = 0.999))
+```
+Como podemos observar no hay apenas diferencia entre cuando  es festivo o no,lo que tiene su sentido ya que en estos dias se compensa la falta de actividad laborable con la actividad que la gente puede hacer fuera de sus casas.
 - ¿El covid-19 ha afectado de alguna manera a la contaminación?\
+```{r}
+
+```
+
 - ¿Que estación del año es en la que menos se contamina?\
 ```{r}
 amd <- dff %>% separate(dateObserved, c("Anyo","Mes","Dia"))
