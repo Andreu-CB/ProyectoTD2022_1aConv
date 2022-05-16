@@ -340,7 +340,7 @@ MesContaminante = dff %>% filter(Ruido %in% ruidos) %>% separate(dateObserved, c
 
 MesContaminante %>% ggplot(aes(x = Mes, y = Valor, fill = Mes)) + geom_boxplot() + labs(title = paste0("Densidad del ruido ",sep="")) + facet_wrap(~Ruido, scales = "free")
 ```
-Podemos ver en cada grafica un indicar de ruido diferente para hacer el estudio del mes con más volumen de ruido en la ciudad de Valencia, en las diferentes zonas con medidores de contaminación acústica.
+Podemos ver en cada grafica un indicador de ruido diferente para hacer el estudio del mes con más volumen de ruido en la ciudad de Valencia, en las diferentes zonas con medidores de contaminación acústica.
 En relación a todos los indicadores de ruido, por minuto, en días, tardes y noches, se observa que el mes en el que más contaminación acústica tiene la ciudad es Marzo, coincidiendo con la festividad de Fallas, que conlleva actos multitudinarios, pirotécnias y música en altos niveles.
 
 
