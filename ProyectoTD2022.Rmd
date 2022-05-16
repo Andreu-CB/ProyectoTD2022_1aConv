@@ -334,11 +334,11 @@ Correspondiendo cada uno de ellos con:
 
 
 - ¿Qué mes es el más contaminante?\
-
+MesContaminante %>% ggplot(aes(x = Mes, y = Valor, fill = Mes)) + geom_boxplot() + labs(title = paste0("Densidad del ruido ",sep="")) + facet_wrap(~Ruido, scales = "free")
 ```{r}
 MesContaminante = dff %>% filter(Ruido %in% ruidos) %>% separate(dateObserved, c("Año","Mes","Dia"))
 
-MesContaminante%>%ggplot(aes(x=Mes,y=Valor,fill=Mes))+geom_boxplot(stat="identity")+labs_title=paste0("Densidad del ruido",sep="") facet_wrap(~Ruido, scales = "free")
+MesContaminante %>% ggplot(aes(x = Mes, y = Valor, fill = Mes)) + geom_boxplot() + labs(title = paste0("Densidad del ruido ",sep="")) + facet_wrap(~Ruido, scales = "free")
 
 
 ```
