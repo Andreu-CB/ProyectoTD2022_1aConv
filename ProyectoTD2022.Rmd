@@ -98,7 +98,7 @@ El siguiente bloque, al no especificar opciones del *chunk* usa la configuració
 
 # Especificamos las librerías necesarias en esta lista
 
-packages = c("tidyverse","knitr")
+packages = c("tidyverse","knitr", 'dplyr', 'tidyr', 'VIM', 'patchwork')
 
 #use this function to check if each package is on the local machine
 #if a package is installed, it will be loaded
@@ -347,4 +347,60 @@ En relación a todos los indicadores de ruido, por minuto, en días, tardes y no
 - ¿En festivos se contamina más?\
 - ¿El covid-19 ha afectado de alguna manera a la contaminación?\
 - ¿Que estación del año es en la que menos se contamina?\
+```{r}
+amd <- dff %>% separate(dateObserved, c("Anyo","Mes","Dia"))
+amd <- amd %>% mutate(Anyo = as.integer(Anyo), Mes = as.integer(Mes), Dia = as.integer(Dia))
+
+for (i in 1:dim(amd[1])){
+  if (((amd[i, 'Mes']) >= 7 & (amd[i, 'Mes']) <= 8) | ((amd[i, 'Mes']) == 6 & (amd[i, 'Dia']) >= 21) | ((amd[i, 'Mes']) == 9 & (amd[i, 'Dia']) < 23)){
+    amd[i, 'Estacion'] <- 'Ver'
+  } else {
+    if (((amd[i, 'Mes']) >= 10 & (amd[i, 'Mes']) <= 11) | ((amd[i, 'Mes']) == 9 & (amd[i, 'Dia']) >= 23) | ((amd[i, 'Mes']) == 12 & (amd[i, 'Dia']) < 21)){
+      amd[i, 'Estacion'] <- 'Ot'
+    } else {
+      if (((amd[i, 'Mes']) >= 1 & (amd[i, 'Mes']) <= 2) | ((amd[i, 'Mes']) == 12 & (amd[i, 'Dia']) >= 21) | ((amd[i, 'Mes']) == 3 & (amd[i, 'Dia']) < 20)){
+        amd[i, 'Estacion'] <-  'Inv'
+      } else {
+        amd[i, 'Estacion'] <-  'Pri'
+      }
+    }
+  }
+}
+amd %>% arrange(desc(Valor)) %>% head()
+# Suprimimos los datos erroneos
+
+amd <- amd %>% filter(Valor != Inf)
+```
+
+
+```{r}
+amd %>% group_by(Estacion) %>% summarize(Media = mean(Valor, na.rm = T)) %>% 
+  ggplot(aes(x = Estacion, y = Media, fill = Estacion)) + geom_bar(stat = 'identity') + ggtitle('Media de ruido por estación')
+
+amd <- amd %>% 
+  mutate(Anyo = as.factor(Anyo))
+
+g2020<- amd %>%
+  filter(Anyo == 2020) %>% 
+  group_by(Estacion) %>% 
+  summarize(m = mean(Valor)) %>% 
+  ggplot(aes(x = Estacion, y = m, fill = Estacion)) + geom_bar(stat = 'identity') + ggtitle('Media dB 2020')
+
+g2021 <- amd %>%
+  filter(Anyo == 2021) %>% 
+  group_by(Estacion) %>% 
+  summarize(m = mean(Valor)) %>% 
+  ggplot(aes(x = Estacion, y = m, fill = Estacion)) + geom_bar(stat = 'identity') + ggtitle('Media dB 2021')
+
+g2022 <- amd %>%
+  filter(Anyo == 2022) %>% 
+  group_by(Estacion) %>% 
+  summarize(m = mean(Valor)) %>% 
+  ggplot(aes(x = Estacion, y = m, fill = Estacion)) + geom_bar(stat = 'identity') + ggtitle('Media dB 2022')
+
+g2020 + g2021 + g2022
+
+filter(amd, Valor > quantile(amd$Valor, prob = 0.999))
+```
+Como podemos ver, en líneas generales todas la estaciones suelen tener una media de ruido parecida estando el verano un escalón por encima. Algo también a destacar es la disparidad que encontramos en el año 2021 donde el ruido captado en verano es mayor que en el resto de estaciones esto es debido a que en 2021 las fallas se celebraron a principios de septiembre.
 
